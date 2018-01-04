@@ -3,6 +3,7 @@ package com.example.wxc575843.jinshu;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 2018.1.5
+ * To do
+ * 1. take a picture
+ * 2. show the picture on screen
+ */
 public class MainActivity extends AppCompatActivity {
 
     private String mCurrentPhotoPath;
@@ -96,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
         mCurrentPhotoPath = f.getAbsolutePath();
         return f;
     }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
+
 
     private void setPic(){
         int targetW = mImageView.getWidth();
